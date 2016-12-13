@@ -8,12 +8,24 @@ var partials=require('express-partials');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var reg=require('./routes/reg');
+var login
 var app = express();
  app.use(partials());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+//数据库session
+var settings=require('./models/settings');
+debugger;
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
+app.use(session({
+    secret: settings.cookieSecret,
+    store: new MongoStore({
+      db: settings.db
+    })
+  }));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
