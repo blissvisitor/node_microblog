@@ -11,10 +11,7 @@ router.post('/', function(req, res, next) {
     //检测两次输入密码是否相同
     if (req.body['password-repeat'] != req.body['password']) {
         req.flash('error', '两次输入口令不一致');
-        res.render('reg', {
-            title: '注册',
-            layout: 'layout'
-        });
+        res.redirect('/reg');
     }
     //生成口令的散列值
     var md5 = crypto.createHash('md5');
